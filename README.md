@@ -8,7 +8,7 @@ Trabajo Práctico número 2 de la materia Algoritmos y Programación III de FIUB
 
 * **Martin Schipani** - [integrante1](https://github.com/integrante1)
 * **Integrante 2** - [integrante2](https://github.com/integrante2)
-* **Integrante 3** - [integrante3](https://github.com/integrante3)
+* **Lucas Nahuel Raimondi** - [integrante3](https://github.com/RZ-LU)
 * **Manuel Jesus Dávila Sánchez** - [integrante4](https://github.com/Manu-jesus)
 
 Corrector: **Pablo S.**
