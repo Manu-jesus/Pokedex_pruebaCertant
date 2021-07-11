@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam maxmessagesize 20
+
+TEG -> Jugador: atacarConA (ataxante,pais_atack, pais_defensor)
+Jugador --> Jugador : estaPais()
+
+Jugador --> argentina : atacarA(Brasil)
+argentina --> dados: hacer_lanzamientos(3)
+dados --> argentina : dados
+
+argentina --> Brasil: defenderseDe(dados1)
+Brasil --> dados: hacer_lanzamientos(3)
+dados --> Brasil : dados
+
+Brasil --> dados: comparar()
+
+@enduml
