@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.lang.String;
 
 public class TEG {
-    private ArrayList<Pais> paises;
+    private final ArrayList<Pais> paises;
 
     public TEG() {
-        Pais Arg = new Pais( 'Argentina', 2);
-        Pais Bra = new Pais('Brasil', 2);
+        paises = new ArrayList<Pais>();
+        Pais Arg = new Pais("Argentina", 3);
+        Pais Bra = new Pais("Brasil", 2);
         Bra.agregarPaisLimitrofes(Arg);
         Arg.agregarPaisLimitrofes(Bra);
         paises.add(Arg);
@@ -20,13 +21,19 @@ public class TEG {
         Pais paisDefensor = this.buscarPais(defensa);
         atacante.atacarDeA(paisAtacante, paisDefensor, cantEjercitos);
     }
-    
+
+    public int cantidadDeEjercitosDe(String nombrePais){
+        Pais pais = this.buscarPais(nombrePais);
+        return pais.cantidadDeEjercitos();
+    }
+
     private Pais buscarPais(String nombrePais){
         for (int i = 0; i < this.paises.size(); i++) {
-            if (this.paises(i).compararNombres(nombrePais)){
-                return this.paises(i);
+            if (this.paises.get(i).compararNombre(nombrePais)){
+                return this.paises.get(i);
             };
         };
-        //no existe pais!
+        return this.paises.get(0);
     }
+
 }

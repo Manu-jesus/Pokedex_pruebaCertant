@@ -38,11 +38,15 @@ public class Pais{
     }
 
     public Dados defenderseDe(Dados dados1, int n){
-        Dados dados2 = new Dados(n);
+        Dados dados2 = new Dados(n-1);
         //dados2.tirarVeces(n);
 
         int ejercitosPerdidosPorElDefensor = dados2.comparar(dados1);
         ejercitos -= ejercitosPerdidosPorElDefensor;
         return dados2;
+    }
+
+    public int cantidadDeEjercitos(){
+        return ejercitos;
     }
 }
