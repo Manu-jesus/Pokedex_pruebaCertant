@@ -1,34 +1,48 @@
 package edu.fiuba.algo3.modelo;
 
 import java.util.ArrayList;
+import java.lang.String;
 
 public class Pais{
-    private int cantidadDeEjercitos;
+    private final String nombre;
+    private int ejercitos;
     private final ArrayList<Pais> paisesLimitrofes;
 
-    public Pais(int cantEjercitos){
-        this.cantidadDeEjercitos
+    public Pais(String nombre, int cantEjercitos){
+        this.nombre = nombre;
+        this.ejercitos = cantEjercitos;
+        this.paisesLimitrofes = new ArrayList<>();
     }
 
-    public atacarA(Pais defensor, int n){
-        if (!this.esPaisLimitrofe(defensor)){
-            return;
-        };
-        Dados dados = new Dados();
-        dados.tirarVeces(n);
+    public boolean compararNombre(String nombre){
+        return (this.nombre.equals(nombre));
+    }
 
-        defensor.defenderseDe(dados, n);
+    public void agregarPaisLimitrofes(Pais p){
+        this.paisesLimitrofes.add(p);
+    }
+    public void atacarA(Pais defensor, int n){
+        if (!this.esPaisLimitrofe(defensor)){
+            return; //Error
+        };
+        Dados dados1 = new Dados(n);
+        //dados.tirarVeces(n);
+
+        Dados dados2 = defensor.defenderseDe(dados1, n);
+        int ejercitosPerdidosPorElDefensor = dados1.comparar(dados2);
+        ejercitos -= ejercitosPerdidosPorElDefensor;
     }
 
     private boolean esPaisLimitrofe(Pais p){
-        return p in paises;
+        return paisesLimitrofes.contains(p);
     }
 
-    public void defenderseDe(Dados dados1){ //no sabemos cuantas veces tira dados el defensor
-        Dados dados2 = new Dados();
-        dados2.tirarVeces(n);
+    public Dados defenderseDe(Dados dados1, int n){
+        Dados dados2 = new Dados(n);
+        //dados2.tirarVeces(n);
 
         int ejercitosPerdidosPorElDefensor = dados2.comparar(dados1);
         ejercitos -= ejercitosPerdidosPorElDefensor;
+        return dados2;
     }
 }
