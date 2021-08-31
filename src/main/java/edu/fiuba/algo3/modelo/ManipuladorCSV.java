@@ -26,23 +26,25 @@ public class ManipuladorCSV {
         try {
             lector = new BufferedReader(new FileReader(rutaArchivo));
             while ((linea = lector.readLine()) != null){
-                partes = linea.split(" , ");
+                partes = linea.split(", ");
                 String numeroDeOrden = partes[0];
-                System.out.println(numeroDeOrden);
+                //System.out.println(numeroDeOrden);
                 String nombre = partes[1];
-                System.out.println(nombre);
+                //System.out.println(nombre);
                 String tipoEnString = partes[2];
-                System.out.println(tipoEnString);
+                //System.out.println(tipoEnString);
                 String nivel = partes[3];
-                System.out.println(nivel);
+                //System.out.println(nivel);
                 String evolucionEnString = partes[4];
-                System.out.println(evolucionEnString);
+                //System.out.println(evolucionEnString);
+                String habilidades = partes[5];
 
                 ArrayList<String> tipos = new ArrayList<>(Arrays.asList(tipoEnString.split(" - ")));
                 Integer intNivel = Integer.parseInt(nivel);
                 ArrayList<String> evolucion = new ArrayList<>(Arrays.asList(evolucionEnString.split(" - ")));
+                ArrayList<String> habilidadesSep = new ArrayList<>(Arrays.asList(habilidades.split(" - ")));
 
-                pokedex.agregarAlDiccionario(nombre, tipos, intNivel, evolucion, numeroDeOrden);
+                pokedex.agregarAlDiccionario(nombre, tipos, intNivel, evolucion, numeroDeOrden, habilidadesSep);
             }
             lector.close();
             linea = null;
@@ -55,17 +57,13 @@ public class ManipuladorCSV {
         }
     }
 
-    public void escribirArchivo(){
+
+    public void reescribirArchivo(){
         try {
             escritor = new FileWriter(rutaArchivo);
 
             ArrayList<Pokemon> pokemonesTotales = pokedex.pokemonesTotales();
-            Collections.sort(pokemonesTotales, new Comparator<Pokemon>() {
-                @Override
-                public int compare(Pokemon p1, Pokemon p2) {
-                    return p1.conseguirNumero().compareTo(p2.conseguirNumero());
-                }
-            });
+            Collections.sort(pokemonesTotales, Comparator.comparing(Pokemon::conseguirNumero));
             for (Pokemon pokeActual : pokemonesTotales) {
                 escritor.write(pokeActual.lineaAEscribir());
             }
@@ -77,4 +75,15 @@ public class ManipuladorCSV {
     }
 
 
+    public void agregarLinea(Pokemon pokemonNuevo) {
+        try {
+            escritor = new FileWriter(rutaArchivo, true);
+
+            escritor.write(pokemonNuevo.lineaAEscribir());
+
+            escritor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
