@@ -86,4 +86,9 @@ public class ManipuladorCSV {
             e.printStackTrace();
         }
     }
+
+    public String nombreArchivo() {
+        return rutaArchivo;
+    }
+
 }

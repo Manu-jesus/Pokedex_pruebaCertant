@@ -16,10 +16,14 @@ import javafx.stage.Stage;
 public class AgregarTipoHandler implements EventHandler<ActionEvent> {
     private Pokedex pokedex;
     private Pokemon pokemon;
+    private Stage original;
+    private Stage principal;
 
-    public AgregarTipoHandler(Pokedex pokedex, Pokemon pokemon) {
+    public AgregarTipoHandler(Stage principal, Stage stage, Pokedex pokedex, Pokemon pokemon) {
         this.pokedex = pokedex;
         this.pokemon = pokemon;
+        this.original = stage;
+        this.principal = principal;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class AgregarTipoHandler implements EventHandler<ActionEvent> {
         TextField texto = new TextField();
 
         Button botonTerminarAgregarTipo = new Button("Agregar");
-        ParteFinalAgregarTipoHandler agregarTipoEvent = new ParteFinalAgregarTipoHandler(nuevo, pokedex, pokemon.obtenerNombre(), texto);
+        ParteFinalAgregarTipoHandler agregarTipoEvent = new ParteFinalAgregarTipoHandler(principal, original, nuevo, pokedex, pokemon.obtenerNombre(), texto);
         botonTerminarAgregarTipo.setOnAction(agregarTipoEvent);
 
         InformacionDeUsuarioEventHandler textoEvent = new InformacionDeUsuarioEventHandler(botonTerminarAgregarTipo);

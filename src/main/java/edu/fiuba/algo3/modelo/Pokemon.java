@@ -9,6 +9,8 @@ public class Pokemon {
     private ArrayList<Pokemon> evoluciones;
     private ArrayList<String> habilidades;
     private Integer numeroDeOrden;
+    private boolean tieneEvolucion;
+    private boolean tieneInvolucion;
 
     public Pokemon (String nombre, ArrayList<String> tipos, Integer nivel){
         this.nombre = nombre;
@@ -17,6 +19,8 @@ public class Pokemon {
         this.evoluciones = new ArrayList<>();
         this.evoluciones.add(this);
         this.nivel = nivel;
+        this.tieneEvolucion = false;
+        this.tieneInvolucion = false;
     }
 
     public String lineaAEscribir(){
@@ -47,22 +51,27 @@ public class Pokemon {
 
     public void agregarEvolucion(Pokemon evolucion) {
 
-        int j = 0;
-
         for (Pokemon aux: evoluciones) {
-            if (aux.nombre.equals(this.nombre)){j=evoluciones.indexOf(aux);}
             if (aux.nombre.equals(evolucion.nombre)){return;}
+        }
+        if (evolucion.tieneInvolucion){
+            throw new ElPokemonIngresadoYaTieneInvolucionError();
+        }
+
+        if (tieneEvolucion){
+            throw new UnPokemonNoPuedeEvolucionarEnDosDiferentesError();
         }
         for (Pokemon evolucionesExtras: evolucion.evoluciones) {
             if (evolucionesExtras.nombre.equals(this.nombre)){continue;}
-            j++;
-            this.evoluciones.add(j, evolucionesExtras);
+            this.evoluciones.add(evolucionesExtras);
         }
 
         for (Pokemon actual : evoluciones) {
             if (actual.nombre.equals(this.nombre)){continue;}
             actual.actualizasEvoluciones(evoluciones);
         }
+        this.tieneEvolucion = true;
+        evolucion.tieneInvolucion = true;
     }
 
     private void actualizasEvoluciones(ArrayList<Pokemon> datosACopiar) {

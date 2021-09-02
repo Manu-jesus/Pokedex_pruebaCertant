@@ -13,13 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CambioNombreHandler implements EventHandler<ActionEvent> {
+public class CambioNivelHandler implements EventHandler<ActionEvent> {
     private Pokedex pokedex;
     private Pokemon pokemon;
     private Stage original;
     private Stage principal;
 
-    public CambioNombreHandler(Stage principal, Stage original,Pokedex pokedex, Pokemon pokemon) {
+    public CambioNivelHandler(Stage principal, Stage original, Pokedex pokedex, Pokemon pokemon) {
         this.pokedex = pokedex;
         this.pokemon = pokemon;
         this.original = original;
@@ -30,19 +30,19 @@ public class CambioNombreHandler implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         Stage nuevo = new Stage();
 
-        Label label = new Label("Nuevo nombre: ");
+        Label label = new Label("Nuevo nivel: ");
 
         TextField texto = new TextField();
 
-        Button botonTerminarCambioNombre = new Button("Cambiar");
-        TerminarCambioNombreHandler terminarEvent = new TerminarCambioNombreHandler(principal,original,nuevo, pokedex, pokemon.obtenerNombre(), texto);
-        botonTerminarCambioNombre.setOnAction(terminarEvent);
+        Button botonTerminarCambioNivel = new Button("Cambiar");
+        TerminarCambioNivelHandler terminarEvent = new TerminarCambioNivelHandler(principal, original, nuevo, pokedex, new TextField(pokemon.obtenerNombre()), texto);
+        botonTerminarCambioNivel.setOnAction(terminarEvent);
 
-        InformacionDeUsuarioEventHandler textoEvent = new InformacionDeUsuarioEventHandler(botonTerminarCambioNombre);
+        InformacionDeUsuarioEventHandler textoEvent = new InformacionDeUsuarioEventHandler(botonTerminarCambioNivel);
         texto.setOnKeyPressed(textoEvent);
 
         HBox cajaHorizontal = new HBox(label, texto);
-        VBox cajaVertical = new VBox(cajaHorizontal, botonTerminarCambioNombre);
+        VBox cajaVertical = new VBox(cajaHorizontal, botonTerminarCambioNivel);
         cajaVertical.setSpacing(20);
         cajaVertical.setPadding(new Insets(20));
 

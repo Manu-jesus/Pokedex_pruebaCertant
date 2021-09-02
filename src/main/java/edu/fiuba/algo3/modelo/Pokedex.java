@@ -72,6 +72,7 @@ public class Pokedex {
 
         for (String aux : evolucion) {
             pokemonEvolucion = dictPokemones.get(aux);
+            if (pokeNuevo.obtenerNombre().equals(aux)){continue;}
             if (pokemonEvolucion == null){pokemonEvolucion = new Pokemon(aux, new ArrayList<>(), -1);}
 
             evolucionAnterior.agregarEvolucion(pokemonEvolucion);
@@ -100,6 +101,7 @@ public class Pokedex {
             Pokemon aux = dictPokemones.get(claves.nextElement());
             valores.add(aux);
         }
+        Collections.sort(valores, Comparator.comparing(Pokemon::conseguirNumero));
         return valores;
     }
 
@@ -180,5 +182,9 @@ public class Pokedex {
 
     public Pokemon obtenerPokemon(String nombreABuscar) {
         return this.revisarLaExistenciaDe(nombreABuscar);
+    }
+
+    public String nombreArchivo() {
+        return this.editorArchivo.nombreArchivo();
     }
 }

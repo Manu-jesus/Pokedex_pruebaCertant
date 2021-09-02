@@ -16,17 +16,22 @@ import javafx.stage.Stage;
 
 public class BuscarPokemonEventHandler implements EventHandler<ActionEvent> {
     private Stage stage;
+    private Stage paraCerrar;
+    private Stage vista;
     private Pokedex pokedex;
     private TextField nombreABuscar;
 
-    public BuscarPokemonEventHandler(Stage stage,Pokedex pokedex, TextField texto) {
+    public BuscarPokemonEventHandler(Stage stage, Stage paraCerrar, Stage vista,Pokedex pokedex, TextField texto) {
         this.stage = stage;
+        this.paraCerrar = paraCerrar;
+        this.vista = vista;
         this.pokedex = pokedex;
         this.nombreABuscar = texto;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        paraCerrar.close();
         Pokemon buscado = null;
         try {
             buscado = pokedex.obtenerPokemon(nombreABuscar.getText());
@@ -34,7 +39,9 @@ public class BuscarPokemonEventHandler implements EventHandler<ActionEvent> {
             this.tratarError("El Pokemon no se encontro en los datos");
         }
 
-        Stage vista = new Stage();
+        if (buscado == null) {
+            return;
+        }
         Label label = new Label(buscado.obtenerNombre());
 
         Button botonDatos = new Button("DATOS");
@@ -53,29 +60,55 @@ public class BuscarPokemonEventHandler implements EventHandler<ActionEvent> {
         CerrarHandler cerrarEvent = new CerrarHandler(vista);
         botonCerrar.setOnAction(cerrarEvent);
 
+        Button botonCerrarGuardar = new Button("Cerrar y Guardar");
+        CerrarGuardarHandler cerrarGuardarEvent = new CerrarGuardarHandler(stage, vista, pokedex);
+        botonCerrarGuardar.setOnAction(cerrarGuardarEvent);
+
         Button botonCambiarNombre = new Button("Cambiar nombre");
-        CambioNombreHandler cambioNombreEvent = new CambioNombreHandler(pokedex, buscado);
+        CambioNombreHandler cambioNombreEvent = new CambioNombreHandler(stage,vista,pokedex, buscado);
         botonCambiarNombre.setOnAction(cambioNombreEvent);
 
-        Button botonAgregarTipo = new Button("Agreagar tipo");
-        AgregarTipoHandler agregarTipoEvent = new AgregarTipoHandler(pokedex, buscado);
+        Button botonCambiarNivel = new Button("Cambiar nivel");
+        CambioNivelHandler cambioNivelEvent = new CambioNivelHandler(stage, vista, pokedex, buscado);
+        botonCambiarNivel.setOnAction(cambioNivelEvent);
+
+        Button botonAgregarTipo = new Button("Agregar tipo");
+        AgregarTipoHandler agregarTipoEvent = new AgregarTipoHandler(stage, vista, pokedex, buscado);
         botonAgregarTipo.setOnAction(agregarTipoEvent);
 
         Button botonEliminarTipo = new Button("Eliminar tipo");
-        EliminarTipoHandler eliminarTipoEvent = new EliminarTipoHandler(pokedex, buscado);
+        EliminarTipoHandler eliminarTipoEvent = new EliminarTipoHandler(stage,vista, pokedex, buscado);
         botonEliminarTipo.setOnAction(eliminarTipoEvent);
 
-        VBox cajaCambios = new VBox(botonCambiarNombre, botonAgregarTipo, botonEliminarTipo);
+        Button botonAgregarHabilidad = new Button("Agregar habilidad");
+        AgregarHabilidadHandler agregarHabilidadEvent = new AgregarHabilidadHandler(stage, vista, pokedex, buscado);
+        botonAgregarHabilidad.setOnAction(agregarHabilidadEvent);
+
+        Button botonEliminarHabilidad = new Button("Eliminar habilidad");
+        EliminarHabilidadHandler eliminarHabilidadEvent = new EliminarHabilidadHandler(stage, vista,pokedex, buscado);
+        botonEliminarHabilidad.setOnAction(eliminarHabilidadEvent);
+
+        Button botonAgregarEvolucion = new Button("Agregar evolucion");
+        AgregarEvolucionHandler agregarEvolucionEvent = new AgregarEvolucionHandler(stage, vista,pokedex, buscado);
+        botonAgregarEvolucion.setOnAction(agregarEvolucionEvent);
+
+
+
+        VBox cajaCambios = new VBox(botonCambiarNombre, botonCambiarNivel, botonAgregarTipo, botonEliminarTipo, botonAgregarHabilidad, botonEliminarHabilidad);
         cajaCambios.setSpacing(20);
         cajaCambios.setPadding(new Insets(20));
 
-        VBox cajaNombre = new VBox(label, botonDatos, botonHabilidades, botonEvoluciones, botonCerrar);
+        VBox cajaNombre = new VBox(label, botonDatos, botonHabilidades, botonEvoluciones);
         cajaNombre.setSpacing(20);
         cajaNombre.setPadding(new Insets(20));
 
-        HBox cajaGrande = new HBox(cajaNombre, cajaCambios);
+        VBox botonesParaCerrar = new VBox(botonCerrar, botonCerrarGuardar);
+        botonesParaCerrar.setSpacing(20);
+        botonesParaCerrar.setPadding(new Insets(70));
 
-        Scene camara = new Scene(cajaGrande, 500, 220);
+        HBox cajaGrande = new HBox(cajaNombre, cajaCambios, botonesParaCerrar);
+
+        Scene camara = new Scene(cajaGrande, 600, 400);
         vista.setScene(camara);
         vista.show();
     }

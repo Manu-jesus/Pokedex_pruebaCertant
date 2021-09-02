@@ -16,10 +16,14 @@ import javafx.stage.Stage;
 public class EliminarTipoHandler implements EventHandler<ActionEvent> {
     private Pokedex pokedex;
     private Pokemon pokemon;
+    private Stage original;
+    private Stage principal;
 
-    public EliminarTipoHandler(Pokedex pokedex, Pokemon pokemon) {
+    public EliminarTipoHandler(Stage principal,Stage original, Pokedex pokedex, Pokemon pokemon) {
         this.pokedex = pokedex;
         this.pokemon = pokemon;
+        this.original = original;
+        this.principal = principal;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class EliminarTipoHandler implements EventHandler<ActionEvent> {
         TextField texto = new TextField();
 
         Button botonTerminarEliminarTipo = new Button("Eliminar");
-        FinalizarEliminarTipoHandler eliminarTipoEvent = new FinalizarEliminarTipoHandler(nuevo, pokedex, pokemon.obtenerNombre(), texto);
+        FinalizarEliminarTipoHandler eliminarTipoEvent = new FinalizarEliminarTipoHandler(principal, original,nuevo, pokedex, pokemon.obtenerNombre(), texto);
         botonTerminarEliminarTipo.setOnAction(eliminarTipoEvent);
 
         InformacionDeUsuarioEventHandler textoEvent = new InformacionDeUsuarioEventHandler(botonTerminarEliminarTipo);

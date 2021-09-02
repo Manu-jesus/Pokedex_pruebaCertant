@@ -18,6 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        Stage aCerrar = new Stage();
         Label label = new Label("Nombre del archivo nuevo: ");
 
         TextField texto = new TextField();

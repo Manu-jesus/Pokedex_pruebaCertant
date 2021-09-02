@@ -13,12 +13,16 @@ import javafx.stage.Stage;
 
 public class ParteFinalAgregarTipoHandler implements EventHandler<ActionEvent> {
     private Stage stage;
+    private Stage original;
+    private Stage principal;
     private String nombreActual;
     private TextField tipoAEliminar;
     private Pokedex pokedex;
 
-    public ParteFinalAgregarTipoHandler(Stage stage,Pokedex pokedex, String nombreActual, TextField texto) {
+    public ParteFinalAgregarTipoHandler(Stage principal,Stage original,Stage stage,Pokedex pokedex, String nombreActual, TextField texto) {
         this.stage = stage;
+        this.original = original;
+        this.principal = principal;
         this.pokedex = pokedex;
         this.tipoAEliminar = texto;
         this.nombreActual = nombreActual;
@@ -28,6 +32,14 @@ public class ParteFinalAgregarTipoHandler implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         pokedex.agregarTipo(nombreActual, tipoAEliminar.getText());
 
-        stage.close();
+        Button cargarDatosAPokedex = new Button("Cargar Datos a Pokedex");
+        BuscarPokemonEventHandler buscarPokemonEvent = new BuscarPokemonEventHandler(principal,stage, original, pokedex, new TextField(nombreActual));
+        cargarDatosAPokedex.setOnAction(buscarPokemonEvent);
+
+        VBox caja = new VBox(cargarDatosAPokedex);
+        Scene scene = new Scene(caja,300,100);
+
+        stage.setScene(scene);
+        stage.show();
     }
 }

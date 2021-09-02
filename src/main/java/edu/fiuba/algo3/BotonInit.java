@@ -1,6 +1,7 @@
 package edu.fiuba.algo3;
 
 import edu.fiuba.algo3.modelo.Pokedex;
+import edu.fiuba.algo3.modelo.Pokemon;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,16 +15,19 @@ import javafx.stage.Stage;
 
 public class BotonInit implements EventHandler<ActionEvent> {
     private Stage stage;
+    //private Stage aCerrar;
     private Pokedex juego;
     private TextField archivo;
 
     public BotonInit (Stage stage, TextField texto){
         this.stage = stage;
+        //this.aCerrar = aCerrar;
         this.archivo = texto;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        //aCerrar.close();
 
         juego = new Pokedex(archivo.getText());
 
@@ -35,33 +39,33 @@ public class BotonInit implements EventHandler<ActionEvent> {
 
         TextField nombre = new TextField();
 
+        Stage nuevo = new Stage();
+        Stage paraCerrar = new Stage();
+
         Button buscarPokemon = new Button("Buscar Pokemon");
-        BuscarPokemonEventHandler buscarPokemonEvent = new BuscarPokemonEventHandler(stage, juego, nombre);
+        BuscarPokemonEventHandler buscarPokemonEvent = new BuscarPokemonEventHandler(stage, paraCerrar, nuevo, juego, nombre);
         buscarPokemon.setOnAction(buscarPokemonEvent);
 
         InformacionDeUsuarioEventHandler buscarTextoEvent = new InformacionDeUsuarioEventHandler(buscarPokemon);
         nombre.setOnKeyPressed(buscarTextoEvent);
 
-        Button conseguirDatos = new Button("Conseguir datos de un Pokemon");
-        Button conseguirHabilidades = new Button("Conseguir habilidades de un Pokemon");
-        Button conseguirEvoluciones = new Button("Conseguir evoluciones de un Pokemon");
-
-        Button cambiarNombre = new Button("Cambiar el nombre de algún Pokemon");
-        Button cambiarNivel = new Button("Cambiar el nivel de algún Pokemon");
-
-        Button eliminarTipo = new Button("Eliminar el tipo de algún Pokemon");
-        Button agregarTipo = new Button("Agregar el tipo de algún Pokemon");
-
-        Button eliminarHabilidad = new Button("Eliminar habilidad de algún Pokemon");
-        Button agregarHabilidad = new Button("Agregar el tipo de algún Pokemon");
+        Integer contador = 1;
+        StringBuilder datosPrevios = new StringBuilder();
+        for (Pokemon poke: juego.pokemonesTotales()) {
+            datosPrevios.append(contador).append(") ");
+            datosPrevios.append(poke.obtenerNombre());
+            datosPrevios.append("\n");
+            contador++;
+        }
+        Label todosActualizados = new Label(datosPrevios.toString());
 
         HBox cajabuscar = new HBox(nombre, buscarPokemon);
 
-        VBox cajaAgregar = new VBox(pregunta, agregarPokemon, cajabuscar);
+        VBox cajaAgregar = new VBox(pregunta, agregarPokemon, cajabuscar, todosActualizados);
         cajaAgregar.setSpacing(20);
         cajaAgregar.setPadding(new Insets(20));
 
-        Scene menu = new Scene(cajaAgregar, 450,220);
+        Scene menu = new Scene(cajaAgregar, 450,520);
 
         stage.setScene(menu);
         stage.show();

@@ -34,8 +34,9 @@ public class DatosHandler implements EventHandler<ActionEvent> {
         caja.setSpacing(20);
         caja.setPadding(new Insets(20));
 
-        Scene scene = new Scene(caja, 400,220);
+        Scene scene = new Scene(caja, 500,400);
         vistaDatos.setScene(scene);
         vistaDatos.showAndWait();
     }
 }
+

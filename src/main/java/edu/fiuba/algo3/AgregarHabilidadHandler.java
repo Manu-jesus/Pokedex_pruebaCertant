@@ -13,36 +13,36 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CambioNombreHandler implements EventHandler<ActionEvent> {
+public class AgregarHabilidadHandler implements EventHandler<ActionEvent> {
     private Pokedex pokedex;
     private Pokemon pokemon;
-    private Stage original;
+    private Stage vistaDelPokemon;
     private Stage principal;
 
-    public CambioNombreHandler(Stage principal, Stage original,Pokedex pokedex, Pokemon pokemon) {
+    public AgregarHabilidadHandler(Stage principal,Stage stage, Pokedex pokedex, Pokemon pokemon) {
+        this.vistaDelPokemon = stage;
+        this.principal = principal;
         this.pokedex = pokedex;
         this.pokemon = pokemon;
-        this.original = original;
-        this.principal = principal;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
         Stage nuevo = new Stage();
 
-        Label label = new Label("Nuevo nombre: ");
+        Label label = new Label("Habilidad a agregar: ");
 
         TextField texto = new TextField();
 
-        Button botonTerminarCambioNombre = new Button("Cambiar");
-        TerminarCambioNombreHandler terminarEvent = new TerminarCambioNombreHandler(principal,original,nuevo, pokedex, pokemon.obtenerNombre(), texto);
-        botonTerminarCambioNombre.setOnAction(terminarEvent);
+        Button botonTerminarAgregarHabilidad = new Button("Agregar");
+        ParteFinalAgregarHabilidadHandler agregarHabilidadEvent = new ParteFinalAgregarHabilidadHandler(principal,vistaDelPokemon, nuevo, pokedex, pokemon.obtenerNombre(), texto);
+        botonTerminarAgregarHabilidad.setOnAction(agregarHabilidadEvent);
 
-        InformacionDeUsuarioEventHandler textoEvent = new InformacionDeUsuarioEventHandler(botonTerminarCambioNombre);
+        InformacionDeUsuarioEventHandler textoEvent = new InformacionDeUsuarioEventHandler(botonTerminarAgregarHabilidad);
         texto.setOnKeyPressed(textoEvent);
 
         HBox cajaHorizontal = new HBox(label, texto);
-        VBox cajaVertical = new VBox(cajaHorizontal, botonTerminarCambioNombre);
+        VBox cajaVertical = new VBox(cajaHorizontal, botonTerminarAgregarHabilidad);
         cajaVertical.setSpacing(20);
         cajaVertical.setPadding(new Insets(20));
 
