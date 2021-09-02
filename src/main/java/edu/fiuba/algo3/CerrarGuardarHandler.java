@@ -27,7 +27,7 @@ public class CerrarGuardarHandler implements EventHandler<ActionEvent> {
         TextField texto = new TextField(pokedex.nombreArchivo());
 
         Button botonInit = new Button("** Continuar Registrando Pokemones **");
-        BotonInit iniciarEvent = new BotonInit(principal, texto);
+        BotonInit iniciarEvent = new BotonInit(principal, stage, texto);
         botonInit.setOnAction(iniciarEvent);
         botonInit.setMinSize(100, 100);
 

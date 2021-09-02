@@ -24,7 +24,7 @@ public class App extends Application {
         TextField texto = new TextField();
 
         Button botonInit = new Button("** Empezar a Registrar Pokemones **");
-        BotonInit iniciarEvent = new BotonInit(stage, texto);
+        BotonInit iniciarEvent = new BotonInit(stage,aCerrar, texto);
         botonInit.setOnAction(iniciarEvent);
         botonInit.setMinSize(100, 100);
 

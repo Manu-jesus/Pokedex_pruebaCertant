@@ -34,7 +34,7 @@ public class AgregarPokemonEventHandler implements EventHandler<ActionEvent> {
         TextField nivelIngresado = new TextField();
 
         Button botonDatosCompletos = new Button("Continuar");
-        CulminarAgregadoEventHandler botonDatosCompletosEvent = new CulminarAgregadoEventHandler(nuevo, nombreIngresado, tiposIngresados, nivelIngresado, pokedex);
+        CulminarAgregadoEventHandler botonDatosCompletosEvent = new CulminarAgregadoEventHandler(stage, nuevo, nombreIngresado, tiposIngresados, nivelIngresado, pokedex);
         botonDatosCompletos.setOnAction(botonDatosCompletosEvent);
 
         InformacionDeUsuarioEventHandler nombreIngresadoEvent = new InformacionDeUsuarioEventHandler(botonDatosCompletos);

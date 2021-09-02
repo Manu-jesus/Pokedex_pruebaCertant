@@ -15,19 +15,19 @@ import javafx.stage.Stage;
 
 public class BotonInit implements EventHandler<ActionEvent> {
     private Stage stage;
-    //private Stage aCerrar;
+    private Stage aCerrar;
     private Pokedex juego;
     private TextField archivo;
 
-    public BotonInit (Stage stage, TextField texto){
+    public BotonInit (Stage stage, Stage aCerrar, TextField texto){
         this.stage = stage;
-        //this.aCerrar = aCerrar;
+        this.aCerrar = aCerrar;
         this.archivo = texto;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        //aCerrar.close();
+        aCerrar.close();
 
         juego = new Pokedex(archivo.getText());
 

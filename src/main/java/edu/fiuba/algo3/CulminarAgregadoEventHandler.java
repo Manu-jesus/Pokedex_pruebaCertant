@@ -5,23 +5,26 @@ import edu.fiuba.algo3.modelo.YaExisteElPokemonErorr;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class CulminarAgregadoEventHandler implements EventHandler<ActionEvent> {
     private Stage stage;
+    private Stage principal;
     private TextField nombre;
     private TextField tipos;
     private TextField nivel;
     private Pokedex pokedex;
 
-    public CulminarAgregadoEventHandler (Stage stage, TextField nombreIngresado,TextField tiposIngresados,TextField nivelIngresado, Pokedex pokedex){
+    public CulminarAgregadoEventHandler (Stage principal, Stage stage, TextField nombreIngresado,TextField tiposIngresados,TextField nivelIngresado, Pokedex pokedex){
         this.nombre = nombreIngresado;
         this.tipos = tiposIngresados;
         this.nivel = nivelIngresado;
 
         this.stage = stage;
+        this.principal = principal;
         this.pokedex = pokedex;
     }
 
@@ -45,7 +48,16 @@ public class CulminarAgregadoEventHandler implements EventHandler<ActionEvent> {
             tratarError("Ya existe el Pokemon");
         }
 
-        stage.close();
+        TextField texto = new TextField(pokedex.nombreArchivo());
+
+        Button botonInit = new Button("** Continuar registrando Pokemones **");
+        BotonInit iniciarEvent = new BotonInit(principal,stage, texto);
+        botonInit.setOnAction(iniciarEvent);
+        botonInit.setMinSize(100, 100);
+
+        Scene scene = new Scene(botonInit);
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void tratarError(String mensaje) {
