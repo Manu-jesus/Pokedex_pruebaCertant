@@ -41,8 +41,8 @@ public class Pokemon {
         return returnable.toString();
     }
 
-    public void agregarNumeroDeOrden(Integer contadorDePokemones) {
-        numeroDeOrden = contadorDePokemones;
+    public void agregarNumeroDeOrden(Integer numeroDeOrden) {
+        this.numeroDeOrden = numeroDeOrden;
     }
 
     public void agregarEvolucion(Pokemon evolucion) {
@@ -53,7 +53,11 @@ public class Pokemon {
             if (aux.nombre.equals(this.nombre)){j=evoluciones.indexOf(aux);}
             if (aux.nombre.equals(evolucion.nombre)){return;}
         }
-        this.evoluciones.add(j+1, evolucion);
+        for (Pokemon evolucionesExtras: evolucion.evoluciones) {
+            if (evolucionesExtras.nombre.equals(this.nombre)){continue;}
+            j++;
+            this.evoluciones.add(j, evolucionesExtras);
+        }
 
         for (Pokemon actual : evoluciones) {
             if (actual.nombre.equals(this.nombre)){continue;}
@@ -116,5 +120,16 @@ public class Pokemon {
             throw new ElTipoNoSeEncontroError();
         }
         tipo.remove(tipoAEliminar);
+    }
+
+    public void quitarHabilidad(String habilidad) {
+        if (!habilidades.contains(habilidad)){
+            throw new LaHabilidadNoSeEncontroError();
+        }
+        habilidades.remove(habilidad);
+    }
+
+    public String obtenerNombre() {
+        return this.nombre;
     }
 }

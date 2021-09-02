@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo;
 
 
+import javafx.scene.control.TextField;
+
 import java.util.*;
 
 
@@ -153,6 +155,21 @@ public class Pokedex {
         pokemon.agregarTipo(tipoAAgregar);
     }
 
+    public void cambiarNivelDe(String nombrePokemon, Integer nuevoNivel) {
+        if (nuevoNivel<=0){
+            return;
+        }
+        Pokemon pokemon = this.revisarLaExistenciaDe(nombrePokemon);
+        pokemon.cambiarNivel(nuevoNivel);
+    }
+
+    public void quitarHabilidadA(String nombrePokemon, String habilidad) {
+
+        Pokemon pokemon = this.revisarLaExistenciaDe(nombrePokemon);
+        pokemon.quitarHabilidad(habilidad);
+
+    }
+
     private Pokemon revisarLaExistenciaDe(String nombrePoke){
         Pokemon pokemon = dictPokemones.get(nombrePoke);
         if (pokemon == null){
@@ -161,11 +178,7 @@ public class Pokedex {
         return pokemon;
     }
 
-    public void cambiarNivelDe(String nombrePokemon, Integer nuevoNivel) {
-        if (nuevoNivel<=0){
-            return;
-        }
-        Pokemon pokemon = this.revisarLaExistenciaDe(nombrePokemon);
-        pokemon.cambiarNivel(nuevoNivel);
+    public Pokemon obtenerPokemon(String nombreABuscar) {
+        return this.revisarLaExistenciaDe(nombreABuscar);
     }
 }
